@@ -193,6 +193,7 @@ def process_data(asset, avg_dur, path):
             zz[ii] = np.array(
                 [tripower_volatility(cts_returns.iloc[int(uu[i].split(":")[0]):int(uu[i].split(":")[1])]) for i in
                  range(len(uu))]).mean()
+        zz[zz <= 1e-10] = 1e-10  # Ensure a positive volatility
         zz = zz.reindex(range(1, T + 1))
 
         # Resample the prices
