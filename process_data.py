@@ -193,6 +193,7 @@ def process_data(asset, avg_dur, path):
             zz[ii] = np.array(
                 [tripower_volatility(cts_returns.iloc[int(uu[i].split(":")[0]):int(uu[i].split(":")[1])]) for i in
                  range(len(uu))]).mean()
+        zz[zz <= 1e-10] = 1e-10  # Ensure a positive volatility
         zz = zz.reindex(range(1, T + 1))
 
         # Resample the prices
@@ -235,6 +236,10 @@ def process_data(asset, avg_dur, path):
 
         # Realized bipower variation
         rbv = np.sqrt(np.pi / 2 * 1 / (T / M - 1) * (cts_returns.abs() * cts_returns.shift().abs()).sum())  # (2.6)
+
+        # If the realized bipower variation is zero, replace it with the the realized volatility
+        if rbv == 0:
+            rbv = np.sqrt(cts_returns.pow(2).sum())
 
         # Standardized returns
         standardized_returns.iloc[row] = (cts_returns / rbv).values  # (2.7)
