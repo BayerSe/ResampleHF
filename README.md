@@ -24,3 +24,8 @@ Currently, these techniques are implemented:
 
 The names in brackets refer to the variables in the process_data.py file.
 For references to these approaches see the comments within the code.
+
+
+## Usage
+
+See [my repo on realized quantities](https://github.com/BayerSe/RealizedQuantities)
